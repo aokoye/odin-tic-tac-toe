@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+#game {
+    display: flex;
+    flex-direction: column;
+}
+
+.row1, .row2, .row3 {
+    display: flex;
+}
+
+.top, .center {
+    border-bottom: 1px solid black;
+}
+
+.left, .mid {
+    border-right: 1px solid black;
+}
+
+.top, .center, .bottom {
+    background-color: khaki;
+    width: 80px;
+    height: 80px;
+}
