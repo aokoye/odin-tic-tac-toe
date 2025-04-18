@@ -9,20 +9,21 @@ function board() {
     'Player 2: <input id="name2" type="text" name="name2" value=""><br><br>' +
     '<input id="submit" type="submit" value="Submit">' +
     '</form>' +
+    '<h3 id="results"></h3>'+
     '<div class="row1">' +
-    '<div class="squares top left" id="1a">" "</div>' +
-    '<div class="squares top mid" id="2a">" "</div>' +
-    '<div class="squares top right" id="3a">" "</div>' +
+    '<div class="squares top left" id="1a"></div>' +
+    '<div class="squares top mid" id="2a"></div>' +
+    '<div class="squares top right" id="3a"></div>' +
     '</div>' +
     '<div class="row2">' +
-    '<div class="squares center left" id="1b">" "</div>' +
-    '<div class="squares center mid" id="2b">" "</div>' +
-    '<div class="squares center right" id="3b">" "</div>' +
+    '<div class="squares center left" id="1b"></div>' +
+    '<div class="squares center mid" id="2b"></div>' +
+    '<div class="squares center right" id="3b"></div>' +
     '</div>'+
     '<div class="row3">' +
-    '<div class="squares bottom left" id="1c">" "</div>' +
-    '<div class="squares bottom mid" id="2c">" "</div>' +
-    '<div class="squares bottom right" id="3c">" "</div>' +
+    '<div class="squares bottom left" id="1c"></div>' +
+    '<div class="squares bottom mid" id="2c"></div>' +
+    '<div class="squares bottom right" id="3c"></div>' +
     '</div>' +
     '<div><button id="reset">Reset</button></div>'
 }
@@ -73,22 +74,28 @@ function game(player, choice) {
     const checker = (arr, target) => target.every(v => arr.includes(v));
     const playedBoxes = player.choices
 
+    function containsOnly(array1, array2){
+        return array2.every(elem => array1.includes(elem))
+    }
+
     if (checker(player.choices, win1) === true) {
-        console.log(player.name + ' won!')
+        document.getElementById("results").innerHTML = player.name + ' won!'
     } else if (checker(playedBoxes, win2) === true) {
-        console.log(player.name + ' won!')
+        document.getElementById("results").innerHTML = player.name + ' won!'
     } else if (checker(playedBoxes, win3) === true) {
         console.log()
     } else if (checker(playedBoxes, win4) === true) {
-        console.log(player.name + ' won!')
+        document.getElementById("results").innerHTML = player.name + ' won!'
     } else if (checker(playedBoxes, win5) === true) {
-        console.log(player.name + ' won!')
+        document.getElementById("results").innerHTML = player.name + ' won!'
     } else if (checker(playedBoxes, win6) === true) {
         console.log()
     } else if (checker(playedBoxes, win7) === true) {
-        console.log(player.name + ' won!')
+        document.getElementById("results").innerHTML = player.name + ' won!'
     } else if (checker(playedBoxes, win8) === true) {
-        console.log(player.name + ' won!')
+        document.getElementById("results").innerHTML = player.name + ' won!'
+    } else if (containsOnly(['o', 'x'], gameBoard) === true){
+        document.getElementById("results").innerHTML = 'There is a tie!'
     } else {
         console.log('keep playing!')}
 
@@ -104,12 +111,12 @@ const createPlayer = ({name, marker}) => ({
 
 const player1 = createPlayer({
     name: 'Jake',
-    marker: 'O'
+    marker: 'o'
 })
 
 const player2 = createPlayer({
     name: 'Amy',
-    marker: ' X'
+    marker: 'x'
 })
 
 let currentPlayer = player1
@@ -185,49 +192,11 @@ button.addEventListener("click", (event) => {
     player1.choices = []
     player2.choices = []
 
-    // function newBoard() {
-    //     document.getElementById('game').innerHTML = 
-    //     '<input id="player1"'
-    //     '<div class="row1">' +
-    //     '<div class="squares top left" id="1a">" "</div>' +
-    //     '<div class="squares top mid" id="2a">" "</div>' +
-    //     '<div class="squares top right" id="3a">" "</div>' +
-    //     '</div>' +
-    //     '<div class="row2">' +
-    //     '<div class="squares center left" id="1b">" "</div>' +
-    //     '<div class="squares center mid" id="2b">" "</div>' +
-    //     '<div class="squares center right" id="3b">" "</div>' +
-    //     '</div>'+
-    //     '<div class="row3">' +
-    //     '<div class="squares bottom left" id="1c">" "</div>' +
-    //     '<div class="squares bottom mid" id="2c">" "</div>' +
-    //     '<div class="squares bottom right" id="3c">" "</div>' +
-    //     '</div>' +
-    //     '<div id=btn><button>Reset</button></div>'
-    // }
-
     document.querySelectorAll(".squares").forEach(item => item.textContent = '')
+    document.getElementById("results").innerHTML = ''
     
     // newBoard()
     console.log(gameBoard)
     console.log(player1)
     console.log(player2)
 });
-
-// console.log(player1)
-// console.log(player2)
-
-// game(currentPlayer, '1b')
-// console.log(currentPlayer)
-// game(currentPlayer, '1b')
-// console.log(currentPlayer)
-// game(currentPlayer, '3a')
-// console.log(currentPlayer)
-// game(currentPlayer, '1c')
-// console.log(currentPlayer)
-// game(currentPlayer, '2a')
-// console.log(currentPlayer)
-// game(currentPlayer, '3c')
-// console.log(currentPlayer)
-// game(currentPlayer, '1a')
-// console.log(currentPlayer)
