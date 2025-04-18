@@ -1,29 +1,36 @@
-const gameBoard = ['1a', '2a', '3a', '1b', '2b', '2c', '3a', '3b', '3c']
-let turn = 1
+const gameBoard = ['1a', '2a', '3a', '1b', '2b', '3b', '1c', '2c', '3c']
+let turn = 0
 
-const reset = gameBoard.splice(0, 9, '1a', '2a', '3a', '1b', '2b', '2c', '3a', '3b', '3c')
+
+function board() {
+    document.getElementById('game').innerHTML = 
+    '<form id="newNames">' +
+    'Player 1: <input id="name1" type="text" name="name1" value=""><br>' +
+    'Player 2: <input id="name2" type="text" name="name2" value=""><br><br>' +
+    '<input id="submit" type="submit" value="Submit">' +
+    '</form>' +
+    '<div class="row1">' +
+    '<div class="squares top left" id="1a">" "</div>' +
+    '<div class="squares top mid" id="2a">" "</div>' +
+    '<div class="squares top right" id="3a">" "</div>' +
+    '</div>' +
+    '<div class="row2">' +
+    '<div class="squares center left" id="1b">" "</div>' +
+    '<div class="squares center mid" id="2b">" "</div>' +
+    '<div class="squares center right" id="3b">" "</div>' +
+    '</div>'+
+    '<div class="row3">' +
+    '<div class="squares bottom left" id="1c">" "</div>' +
+    '<div class="squares bottom mid" id="2c">" "</div>' +
+    '<div class="squares bottom right" id="3c">" "</div>' +
+    '</div>' +
+    '<div><button id="reset">Reset</button></div>'
+}
+
+board()
 
 function game(player, choice) {
-    function board() {
-        document.getElementById('game').innerHTML = 
-        '<div class="row1">' +
-        '<div class="top left" id="1a"></div>' +
-        '<div class="top mid" id="2a"></div>' +
-        '<div class="top right" id="3a"></div>' +
-        '</div>' +
-        '<div class="row2">' +
-        '<div class="center left" id="1b"></div>' +
-        '<div class="center mid" id="2b"></div>' +
-        '<div class="center right" id="3b"></div>' +
-        '</div>'+
-        '<div class="row3">' +
-        '<div class="bottom left" id="1c"></div>' +
-        '<div class="bottom mid" id="2c"></div>' +
-        '<div class="bottom right" id="3c"></div>' +
-        '</div>'
-    }
-
-    board()
+    
 
     console.log(gameBoard.includes(choice))
     console.log(player.name + ' chose ' + choice)
@@ -32,6 +39,7 @@ function game(player, choice) {
         player.choices.push(choice)
         square = gameBoard.indexOf(choice)
         gameBoard[square] = player.marker
+        document.getElementById(choice).innerHTML = player.marker;
         console.log(gameBoard)
     } else {
         console.log('That square was already chosen! Choose a different square ' + player.name + '.')
@@ -41,11 +49,15 @@ function game(player, choice) {
     if(turn % 2 == 0) {
         ++turn
         currentPlayer = player2
+        console.log(player.choices)
+        console.log (player2.name)
     } else {
         ++turn
         currentPlayer = player1
+        console.log(currentPlayer.choices)
+        console.log(player1.name)
     }
-
+    
     console.log(turn)
 
     //win logic
@@ -79,7 +91,10 @@ function game(player, choice) {
         console.log(player.name + ' won!')
     } else {
         console.log('keep playing!')}
+
+    
 }
+
 
 const createPlayer = ({name, marker}) => ({
     name,
@@ -99,20 +114,120 @@ const player2 = createPlayer({
 
 let currentPlayer = player1
 
-console.log(player1)
-console.log(player2)
+//Naming players
+document.getElementById("submit").addEventListener("click", newNames);
+function newNames(){
+    event.preventDefault()
+    let x = document.getElementById("newNames")
+    player1.name = x.elements[0].value
+    player2.name = x.elements[1].value
 
-game(currentPlayer, '1b')
-console.log(currentPlayer)
-game(currentPlayer, '1b')
-console.log(currentPlayer)
-game(currentPlayer, '3a')
-console.log(currentPlayer)
-game(currentPlayer, '1c')
-console.log(currentPlayer)
-game(currentPlayer, '2a')
-console.log(currentPlayer)
-game(currentPlayer, '3c')
-console.log(currentPlayer)
-game(currentPlayer, '1a')
-console.log(currentPlayer)
+    console.log(x.elements[0].value)
+    console.log(x.elements[1].value)
+}
+
+//clicking
+document.getElementById('1a').addEventListener("click", box1a);
+function box1a() {
+    game(currentPlayer, '1a')
+    console.log(currentPlayer)
+//   document.getElementById('1a').innerHTML = currentPlayer.marker;
+}
+
+document.getElementById('2a').addEventListener("click", box2a);
+function box2a() {
+    game(currentPlayer, '2a')
+}
+
+document.getElementById("3a").addEventListener("click", box3a);
+function box3a() {
+    game(currentPlayer, "3a")
+}
+
+document.getElementById("1b").addEventListener("click", box1b);
+function box1b() {
+    game(currentPlayer, "1b")
+}
+
+document.getElementById("2b").addEventListener("click", box2b);
+function box2b() {
+    game(currentPlayer, "2b")
+}
+
+document.getElementById("3b").addEventListener("click", box3b);
+function box3b() {
+    game(currentPlayer, "3b")
+}
+
+document.getElementById("1c").addEventListener("click", box1c);
+function box1c() {
+    game(currentPlayer, "1c")
+}
+
+document.getElementById("2c").addEventListener("click", box2c);
+function box2c() {
+    game(currentPlayer, "2c")
+}
+
+document.getElementById("3c").addEventListener("click", box3c);
+function box3c() {
+    game(currentPlayer, "3c")
+}
+
+//change player names
+
+
+//reset game
+const button = document.querySelector("#reset");
+button.addEventListener("click", (event) => {
+    turn = 0
+    gameBoard.splice(0, 9, '1a', '2a', '3a', '1b', '2b', '3b', '1c', '2c', '3c')
+    player1.choices = []
+    player2.choices = []
+
+    // function newBoard() {
+    //     document.getElementById('game').innerHTML = 
+    //     '<input id="player1"'
+    //     '<div class="row1">' +
+    //     '<div class="squares top left" id="1a">" "</div>' +
+    //     '<div class="squares top mid" id="2a">" "</div>' +
+    //     '<div class="squares top right" id="3a">" "</div>' +
+    //     '</div>' +
+    //     '<div class="row2">' +
+    //     '<div class="squares center left" id="1b">" "</div>' +
+    //     '<div class="squares center mid" id="2b">" "</div>' +
+    //     '<div class="squares center right" id="3b">" "</div>' +
+    //     '</div>'+
+    //     '<div class="row3">' +
+    //     '<div class="squares bottom left" id="1c">" "</div>' +
+    //     '<div class="squares bottom mid" id="2c">" "</div>' +
+    //     '<div class="squares bottom right" id="3c">" "</div>' +
+    //     '</div>' +
+    //     '<div id=btn><button>Reset</button></div>'
+    // }
+
+    document.querySelectorAll(".squares").forEach(item => item.textContent = '')
+    
+    // newBoard()
+    console.log(gameBoard)
+    console.log(player1)
+    console.log(player2)
+});
+
+// console.log(player1)
+// console.log(player2)
+
+// game(currentPlayer, '1b')
+// console.log(currentPlayer)
+// game(currentPlayer, '1b')
+// console.log(currentPlayer)
+// game(currentPlayer, '3a')
+// console.log(currentPlayer)
+// game(currentPlayer, '1c')
+// console.log(currentPlayer)
+// game(currentPlayer, '2a')
+// console.log(currentPlayer)
+// game(currentPlayer, '3c')
+// console.log(currentPlayer)
+// game(currentPlayer, '1a')
+// console.log(currentPlayer)
